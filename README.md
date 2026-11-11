@@ -1,4 +1,4 @@
-# Computer Science Crawler series
+# Computer Science Dungeon Adventures
 
 Unplugged, paper-based computer science games for grades 6–10. Students play solo with a pre-printed
 booklet, one six-sided die and a pencil. No devices needed. The series is planned at about 10 games, each
@@ -9,10 +9,10 @@ Computing & Society (with AI integrated across domains).
 
 | # | Game | Booklet | Status |
 |---|---|---|---|
-| 1 | Computer Science Crawler | [PDF](games/01_crawler/Computer_Science_Crawler_Booklet.pdf) | Built; not yet classroom tested |
-| 2 | Crawler 2: The Smartphone | [PDF](games/02_smartphone/CS_Crawler_2_The_Smartphone_Booklet.pdf) | Built; not yet classroom tested |
+| 1 | Dungeon 1 – The Web | [PDF](games/01_web/Dungeon_1_The_Web_Booklet.pdf) | Built; not yet classroom tested |
+| 2 | Dungeon 2 – The Smartphone | [PDF](games/02_smartphone/Dungeon_2_The_Smartphone_Booklet.pdf) | Built; not yet classroom tested |
 
-**Game 1.** You are a brand-new web crawler bot, sent to index an old website five floors deep before it shuts
+**Dungeon 1 – The Web.** You are a brand-new web crawler bot, sent to index an old website five floors deep before it shuts
 down on Friday.
 
 | Floor | Name | Domain |
@@ -23,7 +23,7 @@ down on Friday.
 | 4 | The Login Page | Systems & Security: passwords, keys and ciphers |
 | 5 | The Sorting Room | Computing & Society: how an AI sorts, and when it gets it wrong |
 
-**Game 2.** The crawler goes inside a smartphone that has been acting strangely: The Lock Screen (flowcharts),
+**Dungeon 2 – The Smartphone.** The crawler goes inside a smartphone that has been acting strangely: The Lock Screen (flowcharts),
 The App Store (REPEAT UNTIL loops), The Camera Roll (pixels), The Battery and Chip (input, processing,
 storage, output) and The Photo Sorter (training an AI, and how a skewed sample skews it).
 
@@ -41,7 +41,7 @@ engine/                 shared by every game
   mechanics/            one file per CS mechanic (Game 1: programs, variables, binary, cipher, sorting_ai;
                         Game 2: flowchart, until_loops, pixels, hardware, training)
 games/
-  01_crawler/game.py    everything specific to Game 1: story, floors, maps, shop, ranks, teacher notes
+  01_web/game.py    everything specific to Game 1: story, floors, maps, shop, ranks, teacher notes
   02_smartphone/game.py Game 2
 docs/
   series_plan.md        the 10 games mapped against the five domains
@@ -61,7 +61,7 @@ Requires Python 3 and reportlab.
 ```bash
 pip install reportlab
 python build.py                  # build every booklet
-python build.py 01_crawler       # build one game
+python build.py 01_web       # build one game
 python build.py --playtest       # build, then playtest every floor and fail if a floor misses the pass marks
 ```
 
@@ -69,7 +69,7 @@ Loading a game also checks its data: for example, that every program stays on th
 
 ## Adding a game
 
-1. Copy `games/01_crawler` to `games/NN_name` and edit `game.py`.
+1. Copy `games/01_web` to `games/NN_name` and edit `game.py`.
 2. Each floor picks a mechanic by name. A new CS idea gets a new file in `engine/mechanics/` (see `docs/mechanics.md`).
 3. Run `python build.py NN_name --playtest` and look at every page of the PDF.
 4. Add the game to the table above and to `docs/series_plan.md`.

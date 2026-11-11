@@ -1,18 +1,18 @@
-"""Game 2: Computer Science Crawler: The Smartphone. Everything specific to this game lives here.
+"""Game 2: Dungeon 2 – The Smartphone. Everything specific to this game lives here.
 
 Map tokens are listed in engine/grid.py (shared) and engine/mechanics/*.py (per mechanic).
 """
 from engine.grid import parse
 
 GAME = dict(
-    title="Computer Science Crawler: The Smartphone",
-    pdf_title="Computer Science Crawler: The Smartphone, an unplugged coding dungeon",
-    output="CS_Crawler_2_The_Smartphone_Booklet.pdf",
+    title="Dungeon 2 – The Smartphone",
+    pdf_title="Dungeon 2 – The Smartphone (Computer Science Dungeon Adventures)",
+    output="Dungeon_2_The_Smartphone_Booklet.pdf",
     start=dict(ram=10, data=0, max_ram=10),
 
     cover=dict(
-        title_lines=["CRAWLER 2:", "THE SMARTPHONE"],
-        subtitle="A COMPUTER SCIENCE CRAWLER ADVENTURE",
+        title_lines=["DUNGEON 2:", "THE SMARTPHONE"],
+        subtitle="COMPUTER SCIENCE DUNGEON ADVENTURES",
         tagline="pencil  ·  paper  ·  one die",
         story="Your first crawl went so well that you have a new job: crawl <b>inside a smartphone</b>. Its "
               "owner says it has been acting strangely. The lock screen keeps looping, the camera roll is "

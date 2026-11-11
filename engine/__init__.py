@@ -1,6 +1,6 @@
-"""Computer Science Crawler series engine: shared rules, drawing, mechanics and playtesting.
+"""Computer Science Dungeon Adventures engine: shared rules, drawing, mechanics and playtesting.
 
-A game is a folder under games/ holding a game.py that defines GAME (see games/01_crawler/game.py).
+A game is a folder under games/ holding a game.py that defines GAME (see games/01_web/game.py).
 """
 import importlib.util
 from pathlib import Path

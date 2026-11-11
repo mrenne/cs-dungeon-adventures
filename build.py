@@ -1,9 +1,9 @@
 """Build and check the games in the series.
 
   python build.py                    build every game's booklet
-  python build.py 01_crawler         build one game
+  python build.py 01_web         build one game
   python build.py --playtest         build, then playtest every floor and fail if any floor misses the pass marks
-  python build.py 01_crawler --playtest --runs 500 --steer 0.8
+  python build.py 01_web --playtest --runs 500 --steer 0.8
 """
 import argparse
 import sys

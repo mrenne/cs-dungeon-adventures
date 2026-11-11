@@ -16,7 +16,7 @@ show whether the rules are clear and the timing works.
 
 ## Sessions
 
-None yet. Game 1 has only been playtested by simulation (1500 runs per floor, 80% steering):
+None yet. Game 1 (Dungeon 1 – The Web) has only been playtested by simulation (1500 runs per floor, 80% steering):
 
 | Floor | Median turns | Slowest 10% | Stuck |
 |---|---|---|---|
@@ -29,7 +29,7 @@ None yet. Game 1 has only been playtested by simulation (1500 runs per floor, 80
 Whole game, without the shop: 0.44 crashes on average, 58% of games with no crash, median final DATA 31.
 Shop prices and rank thresholds are untested.
 
-Game 2 (The Smartphone), same settings:
+Game 2 (Dungeon 2 – The Smartphone), same settings:
 
 | Floor | Median turns | Slowest 10% | Stuck |
 |---|---|---|---|

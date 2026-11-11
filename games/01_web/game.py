@@ -1,18 +1,18 @@
-"""Game 1: Computer Science Crawler. Everything specific to this game lives here; the engine draws it.
+"""Game 1: Dungeon 1 – The Web. Everything specific to this game lives here; the engine draws it.
 
 Map tokens are listed in engine/grid.py (shared) and engine/mechanics/*.py (per mechanic).
 """
 from engine.grid import parse
 
 GAME = dict(
-    title="Computer Science Crawler",
-    pdf_title="Computer Science Crawler: an unplugged coding dungeon",
-    output="Computer_Science_Crawler_Booklet.pdf",
+    title="Dungeon 1 – The Web",
+    pdf_title="Dungeon 1 – The Web (Computer Science Dungeon Adventures)",
+    output="Dungeon_1_The_Web_Booklet.pdf",
     start=dict(ram=10, data=0, max_ram=10),
 
     cover=dict(
-        title_lines=["COMPUTER SCIENCE", "CRAWLER"],
-        subtitle="AN UNPLUGGED CODING DUNGEON",
+        title_lines=["DUNGEON 1:", "THE WEB"],
+        subtitle="COMPUTER SCIENCE DUNGEON ADVENTURES",
         tagline="pencil  ·  paper  ·  one die",
         story="You are a brand-new <b>web crawler</b>: a bot that search engines send out to read the internet. "
               "Your first job is an old website, five floors deep, that shuts down forever on Friday. Crawl each "

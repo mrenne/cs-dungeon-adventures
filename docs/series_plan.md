@@ -20,7 +20,7 @@ About 10 games, each a pre-printed booklet played with one d6 and a pencil, for 
 - **The engine stays the same.** Movement, RAM, DATA, the tracker, the shop and code review are identical in
   every game. Only the floor mechanics and the story change.
 
-## Draft spiral (for review: nothing past Game 1 is built)
+## Draft spiral (for review: nothing past Game 2 is built)
 
 | # | Setting | Algorithms & Design | Programming | Data & Analysis | Systems & Security | Computing & Society (AI) |
 |---|---|---|---|---|---|---|
@@ -49,7 +49,7 @@ Prototype a risky cell on one floor before committing a whole game to it.
 
 Standards codes: match each cell to state or CSTA codes when the spiral is settled. No codes are listed yet.
 
-## Game 2: the smartphone (built 2026-11-11)
+## Game 2: Dungeon 2 – The Smartphone (built 2026-11-11)
 
 Story: the crawler is sent into a phone that has started acting strangely. The phone's parts are the floors.
 The booklet is in `games/02_smartphone/`. What was built differs from the first sketch in three ways:
@@ -74,6 +74,6 @@ The first sketch:
 
 | # | Game | Status |
 |---|---|---|
-| 1 | Computer Science Crawler | Booklet built; not classroom tested |
-| 2 | Crawler 2: The Smartphone | Booklet built; not classroom tested |
+| 1 | Dungeon 1 – The Web | Booklet built; not classroom tested |
+| 2 | Dungeon 2 – The Smartphone | Booklet built; not classroom tested |
 | 3–10 | | Draft above only |
