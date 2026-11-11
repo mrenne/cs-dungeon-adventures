@@ -1,16 +1,21 @@
-"""Monte-Carlo playtest of the Computer Science Crawler floors using the printed movement rules."""
+"""Monte-Carlo playtest of a game's floors using the printed movement rules.
+
+The engine resolves its own squares here; anything else is handed to the floor's mechanic.
+"""
 import copy
 import random
 import statistics
-import sys
 from collections import deque
 
-from floors import FLOORS, FORCE_COST, SIZE, coord, expand, scan
+from .grid import SIZE, coord, expand, find
 
 ORTH = {"U": (-1, 0), "D": (1, 0), "L": (0, -1), "R": (0, 1)}
 DIAG = {"UL": (-1, -1), "UR": (-1, 1), "DL": (1, -1), "DR": (1, 1)}
 ALL = {**ORTH, **DIAG}
 MAX_TURNS = 60
+
+# Pass marks a floor must meet in build.py --playtest
+LIMITS = dict(stuck_pct=2.0, median_turns=(6, 14), p90_turns=25)
 
 
 def opposite(d):
@@ -20,19 +25,17 @@ def opposite(d):
 class Run:
     def __init__(self, floor, rng, greedy=0.0):
         self.f, self.g, self.rng, self.greedy = floor, floor["grid"], rng, greedy
+        self.mech = floor["mech"]
         self.used, self.keys = set(), set()
         self.ram_plus = self.ram_minus = self.data_plus = self.data_minus = 0
-        self.x = floor.get("x_start", 0)
         self.last = None
         self.turns = 0
         self.done = False
         self.visited = set()
-        for r in range(SIZE):
-            for c in range(SIZE):
-                if self.g[r][c] == "ST":
-                    self.pos = (r, c)
-                if self.g[r][c] == "EX":
-                    self.exit = (r, c)
+        self.pos = find(self.g, "ST")[0]
+        self.exit = find(self.g, "EX")[0]
+        self.exit_key = self.mech.exit_key(floor)
+        self.mech.start(self)
 
     def roll(self):
         return self.rng.randint(1, 6)
@@ -64,15 +67,16 @@ class Run:
         return dist
 
     def goal(self):
+        """Distance map toward the exit, or toward the nearest useful key if the exit needs one."""
         dm = self.dist_map(self.exit)
-        needs_key = self.f["num"] == 4 and "1" not in self.keys
+        needs_key = self.exit_key is not None and self.exit_key not in self.keys
         if self.pos in dm and not needs_key:
             return dm
         best = None
         for r in range(SIZE):
             for c in range(SIZE):
                 t = self.g[r][c]
-                if t[0] == "K" and t[1] not in self.keys and (t[1] == "1" or not needs_key):
+                if t[0] == "K" and t[1] not in self.keys and (t[1] == self.exit_key or not needs_key):
                     km = self.dist_map((r, c))
                     if self.pos in km and (best is None or km[self.pos] < best[self.pos]):
                         best = km
@@ -122,46 +126,15 @@ class Run:
         elif t == "MW":
             self.data_minus += self.roll()
             return "stop"
-        elif t[0] == "P":
-            return "program"
-        elif t[0] == "A":
-            self.x += int(t[1])
-        elif t == "X2":
-            self.x *= 2
-        elif t == "Z0":
-            self.x = 0
-        elif t == "I1":
-            if self.x > 3:
-                self.ram_plus += 3
-            else:
-                self.ram_minus += 2
-        elif t == "I2":
-            if self.x % 2 == 0:
-                self.data_plus += 4
-            else:
-                self.ram_minus += 1
-        elif t[0] == "C":
-            self.data_plus += int(t[1])
-        elif t[0] == "W":
-            if t[1] not in self.keys:
-                self.ram_minus += FORCE_COST
         elif t[0] == "K":
             self.keys.add(t[1])
-        elif t[0] == "M":
-            _, stat, amt = scan(t)
-            if stat == "data":
-                self.data_plus += amt
-            elif amt > 0:
-                self.ram_plus += amt
-            else:
-                self.ram_minus -= amt
+            return self.mech.interact(self, t)
+        else:
+            return self.mech.interact(self, t)
         return None
 
     def teleport(self, p):
-        for r in range(SIZE):
-            for c in range(SIZE):
-                if self.g[r][c] == "FA" and (r, c) != p:
-                    return (r, c)
+        return next(q for q in find(self.g, "FA") if q != p)
 
     def run_program(self, name):
         for d in expand(self.f["programs"][name]):
@@ -179,8 +152,6 @@ class Run:
     def turn(self):
         self.turns += 1
         n = self.roll()
-        if self.f["num"] == 3:
-            pass  # roll tally is bookkeeping only
         dirs = list(DIAG if n % 2 else ORTH)
         back = opposite(self.last) if self.last else None
         ok = [d for d in dirs if self.passable(self.step(self.pos, d))]
@@ -241,10 +212,7 @@ class Run:
     def play(self):
         while not self.done and self.turns < MAX_TURNS:
             self.turn()
-        if self.f["num"] == 2:
-            self.data_plus += self.x
-        if self.f["num"] == 3:
-            self.data_plus += 2
+        self.mech.on_leave(self)
         return self
 
 
@@ -253,37 +221,60 @@ def pct(xs, p):
     return xs[min(len(xs) - 1, int(len(xs) * p))]
 
 
-def report(n=1500, greedy=0.8, seed=1):
-    rng = random.Random(seed)
-    print(f"{n} runs per floor, player steers toward the exit {int(greedy*100)}% of choices\n")
-    print("floor  turns(med/p90)  stuck%  RAM net(mean/p10)  DATA net(mean)  squares seen")
-    for f in FLOORS:
-        runs = [Run(f, rng, greedy).play() for _ in range(n)]
-        turns = [r.turns for r in runs]
-        ram = [r.ram_plus - r.ram_minus for r in runs]
-        data = [r.data_plus - r.data_minus for r in runs]
-        stuck = sum(not r.done for r in runs) / n * 100
-        seen = statistics.mean(len(r.visited) for r in runs)
-        print(f"  {f['num']}    {statistics.median(turns):4.0f} / {pct(turns, .9):3d}     {stuck:4.1f}"
-              f"     {statistics.mean(ram):+5.1f} / {pct(ram, .1):+3d}        {statistics.mean(data):+5.1f}"
-              f"          {seen:4.0f}")
+def floor_stats(floor, rng, n, greedy):
+    runs = [Run(floor, rng, greedy).play() for _ in range(n)]
+    turns = [r.turns for r in runs]
+    return dict(
+        median_turns=statistics.median(turns),
+        p90_turns=pct(turns, .9),
+        stuck_pct=sum(not r.done for r in runs) / n * 100,
+        ram_mean=statistics.mean(r.ram_plus - r.ram_minus for r in runs),
+        ram_p10=pct([r.ram_plus - r.ram_minus for r in runs], .1),
+        data_mean=statistics.mean(r.data_plus - r.data_minus for r in runs),
+        seen=statistics.mean(len(r.visited) for r in runs),
+    )
 
+
+def check(stats):
+    """List of reasons a floor fails the pass marks (empty = pass)."""
+    lo, hi = LIMITS["median_turns"]
+    fails = []
+    if stats["stuck_pct"] > LIMITS["stuck_pct"]:
+        fails.append(f"{stats['stuck_pct']:.1f}% of players never reached the exit")
+    if not lo <= stats["median_turns"] <= hi:
+        fails.append(f"median {stats['median_turns']:.0f} turns is outside {lo}-{hi}")
+    if stats["p90_turns"] > LIMITS["p90_turns"]:
+        fails.append(f"slowest 10% took over {stats['p90_turns']} turns")
+    return fails
+
+
+def report(game, n=1500, greedy=0.8, seed=1):
+    """Print the playtest table for every floor plus a whole-game run. Returns True if every floor passes."""
+    rng = random.Random(seed)
+    print(f"{game['title']}: {n} runs per floor, player steers toward the exit {int(greedy*100)}% of choices\n")
+    print("floor  turns(med/p90)  stuck%  RAM net(mean/p10)  DATA net(mean)  squares seen")
+    passed = True
+    for f in game["floors"]:
+        s = floor_stats(f, rng, n, greedy)
+        fails = check(s)
+        passed &= not fails
+        print(f"  {f['num']}    {s['median_turns']:4.0f} / {s['p90_turns']:3d}     {s['stuck_pct']:4.1f}"
+              f"     {s['ram_mean']:+5.1f} / {s['ram_p10']:+3d}        {s['data_mean']:+5.1f}"
+              f"          {s['seen']:4.0f}" + ("" if not fails else "   FAIL: " + "; ".join(fails)))
+
+    st = game["start"]
     crashes, finals = [], []
     for _ in range(n):
-        ram, data, c = 10, 0, 0
-        for f in FLOORS:
+        ram, data, c = st["ram"], st["data"], 0
+        for f in game["floors"]:
             r = Run(f, rng, greedy).play()
-            ram = min(10, ram + r.ram_plus - r.ram_minus)
+            ram = min(st["max_ram"], ram + r.ram_plus - r.ram_minus)
             data = max(0, data + r.data_plus - r.data_minus)
             if ram <= 0:
-                c, ram, data = c + 1, 10, 0
+                c, ram, data = c + 1, st["ram"], st["data"]
         crashes.append(c)
         finals.append(data)
     print(f"\nwhole game (no shop): mean crashes {statistics.mean(crashes):.2f}, "
           f"no-crash games {sum(c == 0 for c in crashes) / n * 100:.0f}%, "
           f"final DATA median {statistics.median(finals):.0f}")
-
-
-if __name__ == "__main__":
-    g = float(sys.argv[1]) if len(sys.argv) > 1 else 0.8
-    report(greedy=g)
+    return passed
