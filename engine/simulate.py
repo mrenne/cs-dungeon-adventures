@@ -7,7 +7,7 @@ import random
 import statistics
 from collections import deque
 
-from .grid import SIZE, coord, expand, find
+from .grid import SIZE, coord, find
 
 ORTH = {"U": (-1, 0), "D": (1, 0), "L": (0, -1), "R": (0, 1)}
 DIAG = {"UL": (-1, -1), "UR": (-1, 1), "DL": (1, -1), "DR": (1, 1)}
@@ -54,9 +54,9 @@ class Run:
     def step(self, p, d):
         return (p[0] + ALL[d][0], p[1] + ALL[d][1])
 
-    def dist_map(self, target):
-        dist = {target: 0}
-        q = deque([target])
+    def dist_map(self, *targets):
+        dist = {t: 0 for t in targets}
+        q = deque(targets)
         while q:
             p = q.popleft()
             for d in ALL:
@@ -68,6 +68,9 @@ class Run:
 
     def goal(self):
         """Distance map toward the exit, or toward the nearest useful key if the exit needs one."""
+        targets = self.mech.targets(self)
+        if targets:
+            return self.dist_map(*targets)
         dm = self.dist_map(self.exit)
         needs_key = self.exit_key is not None and self.exit_key not in self.keys
         if self.pos in dm and not needs_key:
@@ -109,7 +112,7 @@ class Run:
         self.visited.add(p)
         t = self.g[p[0]][p[1]]
         if t == "EX":
-            return "exit"
+            return "exit" if self.mech.can_exit(self) else None
         if t == "FA":
             return "teleport"
         if p in self.used or t in ("..", "ST"):
@@ -137,7 +140,7 @@ class Run:
         return next(q for q in find(self.g, "FA") if q != p)
 
     def run_program(self, name):
-        for d in expand(self.f["programs"][name]):
+        for d in self.mech.program_steps(self, name):
             n = self.step(self.pos, d)
             if not self.passable(n):
                 raise ValueError(f"program {name} hits a wall at {coord(*n)}")
@@ -206,7 +209,8 @@ class Run:
                     self.used.add(self.pos)
         if self.done:
             return
-        if max(abs(self.pos[0] - self.exit[0]), abs(self.pos[1] - self.exit[1])) <= 1:
+        self.mech.after_move(self)
+        if max(abs(self.pos[0] - self.exit[0]), abs(self.pos[1] - self.exit[1])) <= 1 and self.mech.can_exit(self):
             self.done = True
 
     def play(self):
@@ -235,16 +239,18 @@ def floor_stats(floor, rng, n, greedy):
     )
 
 
-def check(stats):
-    """List of reasons a floor fails the pass marks (empty = pass)."""
-    lo, hi = LIMITS["median_turns"]
+def check(stats, floor=None):
+    """List of reasons a floor fails the pass marks (empty = pass).
+    A floor can loosen a mark with playtest_limits=dict(...); say why in a comment there."""
+    limits = {**LIMITS, **(floor or {}).get("playtest_limits", {})}
+    lo, hi = limits["median_turns"]
     fails = []
-    if stats["stuck_pct"] > LIMITS["stuck_pct"]:
+    if stats["stuck_pct"] > limits["stuck_pct"]:
         fails.append(f"{stats['stuck_pct']:.1f}% of players never reached the exit")
     if not lo <= stats["median_turns"] <= hi:
         fails.append(f"median {stats['median_turns']:.0f} turns is outside {lo}-{hi}")
-    if stats["p90_turns"] > LIMITS["p90_turns"]:
-        fails.append(f"slowest 10% took over {stats['p90_turns']} turns")
+    if stats["p90_turns"] > limits["p90_turns"]:
+        fails.append(f"slowest 10% took {stats['p90_turns']} turns (limit {limits['p90_turns']})")
     return fails
 
 
@@ -256,7 +262,7 @@ def report(game, n=1500, greedy=0.8, seed=1):
     passed = True
     for f in game["floors"]:
         s = floor_stats(f, rng, n, greedy)
-        fails = check(s)
+        fails = check(s, f)
         passed &= not fails
         print(f"  {f['num']}    {s['median_turns']:4.0f} / {s['p90_turns']:3d}     {s['stuck_pct']:4.1f}"
               f"     {s['ram_mean']:+5.1f} / {s['ram_p10']:+3d}        {s['data_mean']:+5.1f}"

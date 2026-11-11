@@ -28,9 +28,23 @@ A floor picks one with `mechanic="name"` in its game file.
 | `binary` | Data & Analysis | Binary numbers, data collection (roll log) | `Cn`, binary `Bn`, `Kn Ln` | none | Game 1, Floor 3 |
 | `cipher` | Systems & Security | Authentication, Caesar cipher, cost of weak defences | `Kn Wn` | `cipher`, `force_cost` | Game 1, Floor 4 |
 | `sorting_ai` | Computing & Society | Decision-tree classification and bias | `Ma`–`Mh` | `bots` | Game 1, Floor 5 |
+| `flowchart` | Algorithms & Design | Flowcharts: decisions and a loop, tracing | `Qn` (number 1–9) | none | Game 2, Floor 1 |
+| `until_loops` | Programming | Indefinite loops (REPEAT UNTIL WALL), counting iterations | `Pn` | `programs` with `("until", [steps])` | Game 2, Floor 2 |
+| `pixels` | Data & Analysis | Images as bits | `C1`–`C5` (one per image row) | `image`, `picture` | Game 2, Floor 3 |
+| `hardware` | Systems & Security | Input, processing, storage, output, in order | `HI HP HS HO` | none | Game 2, Floor 4 |
+| `training` | Computing & Society | Learning from labelled examples; skewed samples | `Ma`–`Mh` | `bots`, `test` | Game 2, Floor 5 |
 
-**Fixed for now:** the variable mechanic's code squares and IF rules, the binary roll-log bonus and the
-sorting AI's tree are written into their mechanic files. Make them floor data when a game needs different ones.
+**Fixed for now:** the variable mechanic's code squares and IF rules, the binary roll-log bonus, the
+sorting AI's tree and the flowchart itself are written into their mechanic files. Make them floor data when a game needs different ones.
+
+## Rules a mechanic can add
+
+- **Touch counts.** Hardware parts tick when you cross them *or* end a move touching them, corners included.
+  This is the same rule as the RUN square. It keeps a floor with several required stops from running long.
+- **RUN stays shut.** A mechanic can keep the exit closed until a task is done (`can_exit`). The playtest
+  steers toward that task first (`targets`).
+- **Loops that look ahead.** In `until_loops`, a REPEAT UNTIL WALL loop checks the whole bracket before each
+  repeat. It never stops halfway through a repeat, and it can run 0 times.
 
 ## Adding a mechanic
 

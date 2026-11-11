@@ -41,6 +41,22 @@ class Mechanic:
         """Resolve a mechanic token the first time it is crossed.
         Return None, or 'stop' / 'program' to end the move like the engine's squares do."""
 
+    def program_steps(self, run, name):
+        """Directions a program square moves the player, worked out from where they stand."""
+        from ..grid import expand
+        return expand(run.f["programs"][name])
+
+    def after_move(self, run):
+        """Called where a move ends, before the exit check (for example, squares that count when touched)."""
+
+    def can_exit(self, run):
+        """False while the RUN square is still closed (for example, a task is unfinished)."""
+        return True
+
+    def targets(self, run):
+        """Squares a planning player should head for before the exit, or None."""
+        return None
+
     def exit_key(self, floor):
         """Key the player must hold before heading for the exit, or None."""
         return None

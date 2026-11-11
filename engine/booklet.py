@@ -228,7 +228,7 @@ def teacher_page(c, game):
 
 def build(game, path=None):
     path = path or game["dir"] / game["output"]
-    c = canvas.Canvas(str(path), pagesize=letter)
+    c = canvas.Canvas(str(path), pagesize=letter, invariant=1)  # same input, same bytes
     c.setTitle(game["pdf_title"])
     c.setAuthor(game["title"])
     cover(c, game)

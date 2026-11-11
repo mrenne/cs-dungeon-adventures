@@ -11,7 +11,15 @@ STEP = {"U": (-1, 0), "D": (1, 0), "L": (0, -1), "R": (0, 1)}
 
 def draw_program(c, x, y, program, size=11):
     for step in program:
-        if isinstance(step, tuple):
+        if isinstance(step, tuple) and step[0] == "until":
+            c.setFont(MONO, size)
+            c.drawString(x, y, "REPEAT [")
+            x += c.stringWidth("REPEAT [", MONO, size) + size * 0.4
+            x = draw_program(c, x, y, step[1], size)
+            c.setFont(MONO, size)
+            c.drawString(x, y, "] UNTIL WALL")
+            x += c.stringWidth("] UNTIL WALL", MONO, size)
+        elif isinstance(step, tuple):
             txt = f"REPEAT {step[1]} ["
             c.setFont(MONO, size)
             c.drawString(x, y, txt)

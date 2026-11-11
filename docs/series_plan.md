@@ -49,10 +49,18 @@ Prototype a risky cell on one floor before committing a whole game to it.
 
 Standards codes: match each cell to state or CSTA codes when the spiral is settled. No codes are listed yet.
 
-## Game 2 sketch: the smartphone
+## Game 2: the smartphone (built 2026-11-11)
 
 Story: the crawler is sent into a phone that has started acting strangely. The phone's parts are the floors.
-Each floor below is a new mechanic file; only the setting and maps are new content.
+The booklet is in `games/02_smartphone/`. What was built differs from the first sketch in three ways:
+
+- Floor 1 runs the flowchart on the number printed on the square, not on the roll, so there is nothing to
+  remember and the answer key is fixed.
+- Floor 4's parts also count when you end a move touching them (corners count). Without that rule the floor
+  ran to a median of 19–29 turns.
+- Floor 5 stands on its own: it does not retrain Game 1's tree.
+
+The first sketch:
 
 | Floor | Name | Mechanic | How it plays on paper |
 |---|---|---|---|
@@ -62,14 +70,10 @@ Each floor below is a new mechanic file; only the setting and maps are new conte
 | 4 | The Battery and Chip | `hardware` | Four zone colours (INPUT, PROCESS, STORAGE, OUTPUT). A signal must pass through the zones in order to reach RUN; squares in the wrong order cost RAM. |
 | 5 | The Photo Sorter | `training` | The phone's AI learns from the bots you label. A tally box counts the labels you give; at the end, the AI's rule is whatever you labelled most often. Students see a skewed sample produce a skewed AI. |
 
-Open questions for Game 2:
-- Does the flowchart floor need the die result to stay visible? Players could write the roll on the
-  tracker first.
-- Should Floor 5 build on Game 1's decision tree, so students "retrain" it, or stand alone?
-
 ## Status
 
 | # | Game | Status |
 |---|---|---|
 | 1 | Computer Science Crawler | Booklet built; not classroom tested |
-| 2–10 | | Draft above only |
+| 2 | Crawler 2: The Smartphone | Booklet built; not classroom tested |
+| 3–10 | | Draft above only |

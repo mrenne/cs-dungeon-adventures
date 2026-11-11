@@ -10,6 +10,7 @@ Computing & Society (with AI integrated across domains).
 | # | Game | Booklet | Status |
 |---|---|---|---|
 | 1 | Computer Science Crawler | [PDF](games/01_crawler/Computer_Science_Crawler_Booklet.pdf) | Built; not yet classroom tested |
+| 2 | Crawler 2: The Smartphone | [PDF](games/02_smartphone/CS_Crawler_2_The_Smartphone_Booklet.pdf) | Built; not yet classroom tested |
 
 **Game 1.** You are a brand-new web crawler bot, sent to index an old website five floors deep before it shuts
 down on Friday.
@@ -22,6 +23,10 @@ down on Friday.
 | 4 | The Login Page | Systems & Security: passwords, keys and ciphers |
 | 5 | The Sorting Room | Computing & Society: how an AI sorts, and when it gets it wrong |
 
+**Game 2.** The crawler goes inside a smartphone that has been acting strangely: The Lock Screen (flowcharts),
+The App Store (REPEAT UNTIL loops), The Camera Roll (pixels), The Battery and Chip (input, processing,
+storage, output) and The Photo Sorter (training an AI, and how a skewed sample skews it).
+
 Each booklet is 9 pages, US Letter, black and white: a cover and tracker, how to play, five floors, a shop and
 ranks page, and a teacher answer key.
 
@@ -33,9 +38,11 @@ engine/                 shared by every game
   draw.py               icons, map, tracker, legend, panels
   booklet.py            page layouts and the core rules text
   simulate.py           Monte-Carlo playtest of the printed movement rules
-  mechanics/            one file per CS mechanic (programs, variables, binary, cipher, sorting_ai)
+  mechanics/            one file per CS mechanic (Game 1: programs, variables, binary, cipher, sorting_ai;
+                        Game 2: flowchart, until_loops, pixels, hardware, training)
 games/
   01_crawler/game.py    everything specific to Game 1: story, floors, maps, shop, ranks, teacher notes
+  02_smartphone/game.py Game 2
 docs/
   series_plan.md        the 10 games mapped against the five domains
   mechanics.md          catalogue of mechanics, and open rule questions
