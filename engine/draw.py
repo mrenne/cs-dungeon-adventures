@@ -77,11 +77,15 @@ def panel(c, x, y_top, w, h, title):
     c.setFillGray(0)
 
 
+LICENCE_LINE = "© 2026 Mike Renne · CC BY-NC-SA 4.0 · free to copy for classrooms"
+
+
 def footer(c, game, text):
     c.setFont(SANS, 7.5)
     c.setFillGray(0.35)
     c.drawString(M, 26, game["title"].upper())
     c.drawRightString(W - M, 26, text)
+    c.drawCentredString(W / 2, 26, LICENCE_LINE)
     c.setFillGray(0)
 
 

@@ -1,4 +1,8 @@
+<p align="center"><img src="assets/cs-offline-logo.jpg" alt="Computer Science Offline" width="560"></p>
+
 # Computer Science Dungeon Adventures
+
+Part of the **Computer Science (CS) Offline** project.
 
 Unplugged, paper-based computer science games for grades 6–10. Students play solo with a pre-printed
 booklet, one six-sided die and a pencil. No devices needed. The series is planned at about 10 games, each
@@ -48,6 +52,7 @@ docs/
   mechanics.md          catalogue of mechanics, and open rule questions
   style_guide.md        play, print, writing and balance rules for every booklet
   playtest_log.md       real classroom results
+assets/                 Computer Science (CS) Offline logos (README and booklet covers)
 build.py                builds and checks every game
 ```
 
@@ -73,3 +78,18 @@ Loading a game also checks its data: for example, that every program stays on th
 2. Each floor picks a mechanic by name. A new CS idea gets a new file in `engine/mechanics/` (see `docs/mechanics.md`).
 3. Run `python build.py NN_name --playtest` and look at every page of the PDF.
 4. Add the game to the table above and to `docs/series_plan.md`.
+
+## Licence
+
+This project uses two licences, both © 2026 Mike Renne:
+
+| What | Licence | File |
+|---|---|---|
+| **Software:** `build.py` and `engine/` | [MIT](https://opensource.org/licenses/MIT) | [LICENSE](LICENSE) |
+| **Booklets and game content:** `games/` (the booklet PDFs and each game's `game.py`: stories, maps and puzzles) and `docs/` | [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) | [LICENSE-BOOKLETS](LICENSE-BOOKLETS) |
+
+The Computer Science (CS) Offline logos in `assets/` are not covered by either licence.
+
+You can reuse the engine for anything, including commercial projects, as long as you keep the copyright notice.
+You may copy, print and adapt the booklets for non-commercial use, such as in classrooms, as long as you credit
+the author and share any adapted versions under the same licence.

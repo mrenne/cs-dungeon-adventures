@@ -3,11 +3,14 @@
 Page order: cover, how to play, one page per floor, shop and stats, teacher answer key.
 Page layouts and the core rules live here; all game-specific text comes from the game's GAME dict.
 """
+from PIL import Image
 from reportlab.lib.pagesizes import letter
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfgen import canvas
 
 from .draw import (BOLD, CELL, H, M, SANS, W, arrow, blank, box, centred, draw_map, floor_for, footer, icon,
                    label, legend, panel, para, tracker)
+from . import ROOT
 from .grid import SIZE
 
 
@@ -58,8 +61,25 @@ def cover(c, game):
     para(c, cv["stat_notes"], M + 372, 206, W - 2 * M - 372, size=9.5, leading=14)
     for i, t in enumerate(cv["icons"]):
         icon(c, t, M + 20 + i * 50, 72, 46, floor_for(game, t))
+    offline_line(c, W / 2, 44)
     footer(c, game, "Cover")
     c.showPage()
+
+
+OFFLINE_ICON = ROOT / "assets" / "cs-offline-icon.png"
+OFFLINE_TEXT = "Part of the Computer Science (CS) Offline project"
+
+
+def offline_line(c, cx, y):
+    """The CS Offline icon (in greyscale, for photocopying) and the project line, centred on cx."""
+    s, size = 28, 9.5
+    w = s + 6 + c.stringWidth(OFFLINE_TEXT, BOLD, size)
+    x = cx - w / 2
+    c.drawImage(ImageReader(Image.open(OFFLINE_ICON).convert("LA")), x, y - 10, s, s, mask="auto")
+    c.setFont(BOLD, size)
+    c.setFillGray(0.2)
+    c.drawString(x + s + 6, y, OFFLINE_TEXT)
+    c.setFillGray(0)
 
 
 def mini(c, x, y, cell, cols, rows, walls, path, title):
