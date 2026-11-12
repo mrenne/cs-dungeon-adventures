@@ -12,7 +12,7 @@ Computing & Society (with AI integrated across domains).
 | 1 | Dungeon 1 – The Web | [PDF](games/01_web/Dungeon_1_The_Web_Booklet.pdf) | Built; not yet classroom tested |
 | 2 | Dungeon 2 – The Smartphone | [PDF](games/02_smartphone/Dungeon_2_The_Smartphone_Booklet.pdf) | Built; not yet classroom tested |
 
-**Dungeon 1 – The Web.** You are a brand-new web crawler bot, sent to index an old website five floors deep before it shuts
+**Dungeon 1 – The Web.** You are a brand-new adventurer, a bot that works like a web crawler, sent to index an old website five floors deep before it shuts
 down on Friday.
 
 | Floor | Name | Domain |
@@ -23,7 +23,7 @@ down on Friday.
 | 4 | The Login Page | Systems & Security: passwords, keys and ciphers |
 | 5 | The Sorting Room | Computing & Society: how an AI sorts, and when it gets it wrong |
 
-**Dungeon 2 – The Smartphone.** The crawler goes inside a smartphone that has been acting strangely: The Lock Screen (flowcharts),
+**Dungeon 2 – The Smartphone.** The adventurer goes inside a smartphone that has been acting strangely: The Lock Screen (flowcharts),
 The App Store (REPEAT UNTIL loops), The Camera Roll (pixels), The Battery and Chip (input, processing,
 storage, output) and The Photo Sorter (training an AI, and how a skewed sample skews it).
 

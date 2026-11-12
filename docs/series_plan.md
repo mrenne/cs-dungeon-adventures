@@ -13,7 +13,7 @@ About 10 games, each a pre-printed booklet played with one d6 and a pencil, for 
 - **Each game goes one step deeper in every domain** than the game before it. A floor may assume the
   concepts from the same domain in earlier games, but its rule panel must still teach enough to play
   without them, so any game works on its own.
-- **The same hero, a new setting.** The crawler bot from Game 1 returns in every game and is sent into a new
+- **The same hero, a new setting.** The adventurer bot from Game 1 returns in every game and is sent into a new
   system. The setting gives each game its story; the Floor 5 twist is always about computing and society.
 - **Rough grade fit:** games 1–2 for grade 6, 3–4 for grade 7, 5–6 for grade 8, 7–8 for grade 9 and 9–10 for
   grade 10. Teachers can start anywhere.
@@ -51,7 +51,7 @@ Standards codes: match each cell to state or CSTA codes when the spiral is settl
 
 ## Game 2: Dungeon 2 – The Smartphone (built 2026-11-11)
 
-Story: the crawler is sent into a phone that has started acting strangely. The phone's parts are the floors.
+Story: the adventurer is sent into a phone that has started acting strangely. The phone's parts are the floors.
 The booklet is in `games/02_smartphone/`. What was built differs from the first sketch in three ways:
 
 - Floor 1 runs the flowchart on the number printed on the square, not on the roll, so there is nothing to

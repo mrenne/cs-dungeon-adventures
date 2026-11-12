@@ -139,7 +139,7 @@ def rules_page(c, game):
             "RAM cannot go above your Max RAM. DATA cannot go below 0. You do not crash in the middle of a "
             "floor: only the END number counts.", lx + 12, y3 - 18, colw - 24, size=9.5)
     panel(c, rx, y3, colw, 92, "CRASH!")
-    para(c, "If your END RAM is <b>0 or less</b>, your crawler crashed. Tally one crash on the last page. "
+    para(c, "If your END RAM is <b>0 or less</b>, your adventurer crashed. Tally one crash on the last page. "
             f"Start the next floor with <b>{st['ram']} RAM and {st['data']} DATA</b>. Keep playing!",
          rx + 12, y3 - 18, colw - 24, size=9.5)
     panel(c, rx, y3 - 104, colw, 92, "CODE REVIEW")

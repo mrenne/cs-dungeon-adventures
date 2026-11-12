@@ -2,6 +2,3 @@ __pycache__/
 *.pyc
 *.png
 .venv/
-
-# Third-party reference material: not ours to redistribute
-Paper App DUNGEON*.pdf

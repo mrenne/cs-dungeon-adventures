@@ -14,13 +14,14 @@ GAME = dict(
         title_lines=["DUNGEON 1:", "THE WEB"],
         subtitle="COMPUTER SCIENCE DUNGEON ADVENTURES",
         tagline="pencil  ·  paper  ·  one die",
-        story="You are a brand-new <b>web crawler</b>: a bot that search engines send out to read the internet. "
-              "Your first job is an old website, five floors deep, that shuts down forever on Friday. Crawl each "
+        story="You are a brand-new <b>adventurer</b>: a bot that works like the <b>web crawlers</b> search engines "
+              "send out to read the internet. "
+              "Your first job is an old website, five floors deep, that shuts down forever on Friday. Explore each "
               "floor, index its <b>DATA</b>, and survive the broken code that drains your <b>RAM</b>. Reach the "
-              "RUN square to follow the link down to the next floor. One warning from the last crawler sent "
+              "RUN square to follow the link down to the next floor. One warning from the last adventurer sent "
               "here: something at the bottom has been sorting visitors all wrong.",
-        avatar="DRAW YOUR CRAWLER",
-        fields=["Crawler name", "Real name", "Class", "Date started", "Date finished"],
+        avatar="DRAW YOUR ADVENTURER",
+        fields=["Adventurer name", "Real name", "Class", "Date started", "Date finished"],
         stat_notes="<b>RAM</b> is your energy. Broken code drains it.<br/><b>DATA</b> is what you index. "
                    "Spend it in the shop.<br/><b>MAX RAM</b> is the most RAM you can hold.",
         icons=["ST", "B2", "o.", "DB", "+2", "MW", "FA", "Ma", "Mb", "EX"],
