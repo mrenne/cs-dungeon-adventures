@@ -15,8 +15,8 @@ A floor picks one with `mechanic="name"` in its game file.
 | `DB` | Database | Roll, gain that much DATA |
 | `Bn` / `B?` | Bug / mystery bug | Lose n RAM / roll and lose that RAM |
 | `+n` / `+?` | Power-up / mystery power-up | Gain n RAM / roll and gain that RAM |
-| `MW` | Malware | Stop. Roll, lose that much DATA |
-| `FA` | Function call pair | Jump to the other f( ) and keep moving |
+| `MW` | Malware | Stop (even partway through a program). Roll, lose that much DATA |
+| `FA` | Function call pair | Jump to the other f( ) every time and keep moving |
 | `Kn` / `Ln` | Key / locked door | A door is a wall until you hold its key |
 
 ## Mechanics
@@ -44,7 +44,9 @@ sorting AI's tree and the flowchart itself are written into their mechanic files
 - **RUN stays shut.** A mechanic can keep the exit closed until a task is done (`can_exit`). The playtest
   steers toward that task first (`targets`).
 - **Loops that look ahead.** In `until_loops`, a REPEAT UNTIL WALL loop checks the whole bracket before each
-  repeat. It never stops halfway through a repeat, and it can run 0 times.
+  repeat. It never stops halfway through a repeat, and it can run 0 times. Malware on the route stops the
+  program there; the repeat that reached it counts. Malware may only sit on the last step of a repeat, so
+  there is never half a repeat to count (loading the game checks this).
 
 ## Adding a mechanic
 
@@ -54,9 +56,10 @@ sorting AI's tree and the flowchart itself are written into their mechanic files
 4. Add a row to the table above.
 5. Run `python build.py --playtest` and look at every page.
 
-## Open rule questions (engine-wide, decide before Game 2)
+## Engine rules decided (2026-11-11)
 
-- Are function squares mandatory every time, or only the first time? The playtest currently jumps on the
-  first visit and half the time after that.
-- Does malware stop a program partway through? The playtest currently stops it.
-- Are leftover squares from a roll lost when you land on a program square? The playtest currently drops them.
+- **Function squares jump you every time**, not just the first time. They are never crossed out.
+- **Malware stops a program partway through.** The rest of the program is lost.
+- **Landing on a program square ends your move.** Any squares left on the roll are lost.
+
+The booklet keys and program panels say this, and the playtest follows it.

@@ -149,8 +149,10 @@ class Run:
             if res == "exit":
                 self.done = True
                 return
-            if res == "stop":
+            if res == "stop":  # malware stops a program partway through
                 return
+            if res == "teleport":
+                self.pos = self.teleport(n)
 
     def turn(self):
         self.turns += 1
@@ -201,12 +203,8 @@ class Run:
             if res == "program":
                 self.run_program(self.g[nxt[0]][nxt[1]])
                 break
-            if res == "teleport":
-                first = nxt not in self.used
-                self.used.add(nxt)
-                if first or self.rng.random() < 0.5:
-                    self.pos = self.teleport(nxt)
-                    self.used.add(self.pos)
+            if res == "teleport":  # function squares jump you every time
+                self.pos = self.teleport(nxt)
         if self.done:
             return
         self.mech.after_move(self)

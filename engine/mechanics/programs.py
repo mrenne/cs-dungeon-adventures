@@ -61,7 +61,7 @@ class Programs(Mechanic):
     def rule_panel(self, c, floor, x, yt, w, h):
         panel(c, x, yt, w, h, "FLOOR RULE: PROGRAM SQUARES")
         para(c, "A program is a list of steps. Step on a program square (<b>P1</b>, <b>P2</b>, <b>P3</b>) and your "
-                "move stops. Now <b>run the program</b>: move one square for each arrow, in order.<br/><br/>"
+                "move stops: the rest of your roll is lost. Now <b>run the program</b>: move one square for each arrow, in order.<br/><br/>"
                 "<b>REPEAT 2 [ ... ]</b> is a loop. Do the steps inside the brackets 2 times.<br/><br/>"
                 "Use everything you cross. You stop where the program ends. Each program runs once, "
                 "then cross it out.", x + 12, yt - 18, 250)

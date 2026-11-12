@@ -258,8 +258,8 @@ LEGEND = {
     "B?": "<b>Mystery bug:</b> roll, lose that much RAM",
     "+2": "<b>Power-up:</b> gain that much RAM",
     "+?": "<b>Mystery power-up:</b> roll, gain that RAM",
-    "MW": "<b>Malware:</b> STOP. Roll, lose that DATA",
-    "FA": "<b>Function:</b> jump to the other f( ), keep going",
+    "MW": "<b>Malware:</b> STOP, even in a program. Roll, lose that DATA",
+    "FA": "<b>Function:</b> jump to the other f( ) every time, keep going",
 }
 
 

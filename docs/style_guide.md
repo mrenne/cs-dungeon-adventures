@@ -29,4 +29,4 @@ Rules every booklet in the series follows.
 - Every floor must be finishable: under 2% of simulated players stuck.
 - Median 6–14 turns per floor; slowest 10% within 25 turns. A floor may loosen a mark with
   `playtest_limits` in its game file, with a comment saying why (Game 2, Floor 4 does).
-- Aim for most players to finish a whole game without crashing. Game 1: 58% with no crash, 0.44 crashes on average.
+- Aim for most players to finish a whole game without crashing. Game 1: 59% with no crash, 0.43 crashes on average.
