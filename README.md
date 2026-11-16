@@ -81,7 +81,7 @@ Loading a game also checks its data: for example, that every program stays on th
 
 ## Licence
 
-This project uses two licences, both © 2026 Mike Renne:
+A CS Offline project by Mike Renne. The games and the code are openly licensed, under two licences:
 
 | What | Licence | File |
 |---|---|---|
